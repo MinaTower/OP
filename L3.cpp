@@ -1,7 +1,7 @@
 #include<iostream>
 #include<locale>
 using namespace std;
-static int n = 3;
+const int n = 3;
 int exponentiation(int num, int degree){
     int res = num;
     for (int i = 2; i <= degree; i++)
@@ -10,7 +10,7 @@ int exponentiation(int num, int degree){
     }
     return(res);
 }
-int determinant(int matrix[], int matrix_order){//
+int determinant(int *matrix[], int matrix_order = n){//
     int res = 0;
     if (matrix_order == 2){
         cout << (matrix[0][0])<< endl;//d
