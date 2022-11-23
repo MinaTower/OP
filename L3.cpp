@@ -15,12 +15,12 @@ int exponentiation(int num, int degree)
 int determinant(const int SIZE, int num_element, int* matrix_previous[])
 {
     int res = 0;
-    int* matrix_next_step[SIZE] = {new int[SIZE]};
+    int** matrix_next_step = new int*[SIZE];
     for (int row = 0; row < SIZE; row++ )
     {
         int filler = 0;
         matrix_next_step[row] = new int[SIZE];
-        for (int column = 0; column < SIZE + 1; column++)
+        for (int column = 0; column < SIZE; column++)
         {
             if (column != num_element){
                 matrix_next_step[row][column] = matrix_previous[((row + 1) * (SIZE + 1))][filler];
@@ -57,7 +57,7 @@ int main()
     cout << " Это программа для вычисления определителя матрицы n-го порядка" << endl;
     int answer = 0;
     const int n = 3;
-    int* matrix_first[n] = {new int[n]};
+    int **matrix_first = new int*;
     for (int row=0;row <n; row ++)
     {
         matrix_first[row] = new int [n];
@@ -70,7 +70,12 @@ int main()
     }
     cout << 'v';//
     if (n == 2){
-            answer = (matrix_first[0][0]*(matrix_first[1][1]) - matrix_first[0][1]*(matrix_first[1][0]));
+        answer = (matrix_first[0][0]*(matrix_first[1][1]) - matrix_first[0][1]*(matrix_first[1][0]));
+        for (int j=0; j < n; j++)
+        {
+            delete[] matrix_first[j];
+        }
+        delete[] matrix_first;
     } else {
         for (int i = 0; i < n; i++)
         {
