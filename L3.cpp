@@ -12,7 +12,7 @@ int exponentiation(int num, int degree)
     return(res);
 }
 
-int determinant(const int SIZE, int num_element, int* matrix_previous[])
+int minor(const int SIZE, int num_element, int* matrix_previous[])
 {
     int res = 0;
     int** matrix_next_step = new int*[SIZE];
@@ -38,7 +38,7 @@ int determinant(const int SIZE, int num_element, int* matrix_previous[])
     } else {
         for (int i = 0; i < SIZE; i++)
         {
-        res += (matrix_next_step[0][i])*exponentiation(-1, (i+1)+1)*determinant(SIZE -1, i, &matrix_next_step[0]);
+        res += (matrix_next_step[0][i])*exponentiation(-1, (i+1)+1)*minor(SIZE -1, i, &matrix_next_step[0]);
         }
         for (int j=0; j < SIZE; j++)
         {
@@ -77,7 +77,7 @@ int main()
     } else {
         for (int i = 0; i < n; i++)
         {
-            answer += (matrix_first[0][i])*exponentiation(-1, (i+1)+1)*determinant(n - 1, i, &matrix_first[0]);
+            answer += (matrix_first[0][i])*exponentiation(-1, (i+1)+1)*minor(n - 1, i, &matrix_first[0]);
         }
     }
     cout << "Определитель равен " << answer << endl;
