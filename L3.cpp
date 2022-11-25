@@ -14,7 +14,7 @@ int exponentiation(int num, int degree)
 
 int determinant(const int SIZE, int num_element, int* matrix_previous[])
 {
-    int res;
+    int res = 0;
     int** matrix_next_step = new int*[SIZE];
     for (int row = 0; row < SIZE; row++ )
     {
@@ -28,7 +28,6 @@ int determinant(const int SIZE, int num_element, int* matrix_previous[])
             }
         }
     }
-    //cout << "dva"<<endl;//
     if (SIZE == 2){
         res = (matrix_next_step[0][0])*(matrix_next_step[1][1]) - ((matrix_next_step[0][1])*(matrix_next_step[1][0]));
         for (int j=0; j < 2; j++)
@@ -37,7 +36,6 @@ int determinant(const int SIZE, int num_element, int* matrix_previous[])
         }
         delete[] matrix_next_step;
     } else {
-        //cout <<"Det"<<endl;//
         for (int i = 0; i < SIZE; i++)
         {
         res += (matrix_next_step[0][i])*exponentiation(-1, (i+1)+1)*determinant(SIZE -1, i, &matrix_next_step[0]);
@@ -48,7 +46,6 @@ int determinant(const int SIZE, int num_element, int* matrix_previous[])
         }
         delete[] matrix_next_step;
     }
-    cout <<res<<endl;//
     return res;
 }
 
@@ -56,17 +53,18 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     cout << " Это программа для вычисления определителя матрицы n-го порядка" << endl;
+    cout << " Вводите значения элементов матрицы (a[1][1], следом a[1][2] и т.д.)" << endl;
+    const int n = 5;
     int answer = 0;
-    const int n = 4;
     int** matrix_first = new int*[n];
-    for (int row=0;row <n; row ++)
+    for (int row=0;row < n; row ++)
     {
         matrix_first[row] = new int[n];
         for (int column = 0; column < n; column ++)
         {
-            //int f;
-            //cin >> f;
-            matrix_first[row][column] = (row*n + column+1);//f;
+            int f;
+            cin >> f;
+            matrix_first[row][column] = f;
         }
     }
     if (n == 2){
