@@ -12,6 +12,15 @@ int exponentiation(int num, int degree)
     return(res);
 }
 
+void del(int* matrix[], const int rows)
+{
+        for (int j=0; j < rows; j++)
+        {
+            delete[] matrix[j];
+        }
+        delete[] matrix;
+}
+
 int minor(const int SIZE, int num_element, int* matrix_previous[])
 {
     int res = 0;
@@ -30,32 +39,39 @@ int minor(const int SIZE, int num_element, int* matrix_previous[])
     }
     if (SIZE == 2){
         res = (matrix_next_step[0][0])*(matrix_next_step[1][1]) - ((matrix_next_step[0][1])*(matrix_next_step[1][0]));
-        for (int j=0; j < 2; j++)
-        {
-            delete[] matrix_next_step[j];
-        }
-        delete[] matrix_next_step;
+        del(&matrix_next_step[0], SIZE);
     } else {
         for (int i = 0; i < SIZE; i++)
         {
         res += (matrix_next_step[0][i])*exponentiation(-1, (i+1)+1)*minor(SIZE -1, i, &matrix_next_step[0]);
         }
-        for (int j=0; j < SIZE; j++)
-        {
-            delete[] matrix_next_step[j];
-        }
-        delete[] matrix_next_step;
+        del(&matrix_next_step[0], SIZE);
     }
     return res;
+}
+
+int determinant(int* matrix_1[], const int size)
+{
+    int ans =0;
+    if (size == 2){
+        ans = (matrix_1[0][0]*(matrix_1[1][1]) - matrix_1[0][1]*(matrix_1[1][0]));
+    } else {
+        for (int i = 0; i < size; i++)
+        {
+            ans += (matrix_1[0][i])*exponentiation(-1, (i+1)+1)*minor(size - 1, i, &matrix_1[0]);
+        }
+    }
+    return ans;
 }
 
 int main()
 {
     setlocale(LC_ALL, "Russian");
     cout << " Это программа для вычисления определителя матрицы n-го порядка" << endl;
-    cout << " Вводите значения элементов матрицы (a[1][1], следом a[1][2] и т.д.)" << endl;
-    const int n = 5;
-    int answer = 0;
+    cout << " Введите порядок исследуемой матрицы: ";
+    int n;
+    cin >> n;
+    cout << " Вводите значения элементов матрицы построчно (a[1][1], следом a[1][2] и т.д.)" << endl;
     int** matrix_first = new int*[n];
     for (int row=0;row < n; row ++)
     {
@@ -67,19 +83,9 @@ int main()
             matrix_first[row][column] = f;
         }
     }
-    if (n == 2){
-        answer = (matrix_first[0][0]*(matrix_first[1][1]) - matrix_first[0][1]*(matrix_first[1][0]));
-        for (int j=0; j < n; j++)
-        {
-            delete[] matrix_first[j];
-        }
-        delete[] matrix_first;
-    } else {
-        for (int i = 0; i < n; i++)
-        {
-            answer += (matrix_first[0][i])*exponentiation(-1, (i+1)+1)*minor(n - 1, i, &matrix_first[0]);
-        }
-    }
+    int answer = 0;
+    answer = determinant(&matrix_first[0], n);
     cout << "Определитель равен " << answer << endl;
+    del(&matrix_first[0], n);
     return 0;
 }
