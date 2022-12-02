@@ -1,21 +1,29 @@
 #include<iostream>
+#include<locale>
 using namespace std;
-char** split(char* string, char separator)
+struct splitted_string
 {
-	int string_len = sizeof(string) -1;
+    char** words;
+    int num_of_words;
+};
+
+splitted_string split(char string[], char separator, int string_len)
+{
+    splitted_string ans;
 	int separator_num_of_ind = 0;
-	int num_words = 1;
-	for (int i=0; i<string_len; i++)
+	ans.num_of_words = 1;
+	for (int i=0; i<string_len + 1; i++)
 	{
-		if (string[i] == separator){
+		if (string[i] == separator && (i != string_len)){
 			separator_num_of_ind +=1;
-			num_words +=1;
-		} else if (i == 0 || i == string_len-1 ){
+			ans.num_of_words +=1;
+		} else if (i == 0 || i == string_len){
 			separator_num_of_ind +=1;
+	    }
 	}
 	int* separator_ind = new int[separator_num_of_ind];
 	int j =0 ;
-	for (i=0; i<string_len; i++)
+	for (int i=0; i<string_len; i++)
 	{
 		if (string[i] == separator){
 			separator_ind[j] = i;
@@ -25,28 +33,39 @@ char** split(char* string, char separator)
 			j++;
 		}
 	}
-	char** answer = new char*[num_words];
-	for (int word_n =0;word_n < num_words;word_n++)
+	ans.words = new char*[ans.num_of_words];
+	for (int word_n =0; word_n < ans.num_of_words;word_n++)
 	{
-		int differ = separator_ind[word_n + 1] - separator_ind[word_n];
-		answer[word_n] = new char[differ];
+		int differ = separator_ind[word_n + 1] - separator_ind[word_n] -1;
+		if ((word_n == 0 && string[0] != separator) || (word_n == ans.num_of_words - 1 && (string[string_len-1] != separator))){
+		    differ += 1;
+		}
+		ans.words[word_n] = new char[differ];
 		for (int letter_n =0;letter_n < differ;letter_n ++)
 		{
-			answer[word_n][letter_n] = string[separator_ind[word_n] + letter_n];
+		    int ind = separator_ind[word_n] + 1 + letter_n;
+		    if (word_n == 0 && (string[0] != separator))
+		    {
+		        ind -= 1;
+		    }
+			ans.words[word_n][letter_n] = string[ind];
 		}
 	}
-	return answer;
-	}
+	return ans;
 }
-	
+
 int main()
 {
-	char* mystr[] = 'my secret servise';
-	int s_len = sizeof(mystr) -1;
-	char** subs = split(&mystr[0], 's');
-	for (int h=0;h < s_len; h++)
+    setlocale(LC_ALL, "Russian");
+    cout << " Это программа для разделения строки на подстроки по вводимому символу" << endl<< " Укажите его: ";
+	char mystr[] = "my secret servise";
+	char sep;
+	cin >> sep;
+	int mystr_len = sizeof(mystr) - 1;
+	splitted_string subs = split(&mystr[0], sep, mystr_len);//sep
+	for (int h=0;h < subs.num_of_words; h++)
 	{
-		cout << subs[h];
+	    cout << subs.words[h]<< endl;
 	}
 	return 0;
 }
