@@ -46,7 +46,7 @@ splitted_string split(char strin[], char separator, int string_len)
 		    differ += 1;
 		}
 		ans.words[word_n] = new char[differ];
-		for (int letter_n =0;letter_n < differ - 1;letter_n ++)
+		for (int letter_n =0; letter_n < differ - 1; letter_n ++)
 		{
 		    int ind = separator_ind[word_n] + 1 + letter_n;
 		    if (word_n == 0 && (strin[0] != separator))
@@ -68,22 +68,16 @@ int main()
     char sep = ' ';
     cin >> if_space;
     if (if_space == 'n'){
-    	cout <<" Укажите его: ";
+    	cout << " Укажите его: ";
     	cin >> sep;
-    	if (-33 < int(sep) && (int(sep) < -16 )){
-            sep += 16;
-        } else if (-128 <= int(sep) && (int(sep) < -16)) {
-            sep += 64;
-        }
     }// для не-дурака
-	char mystr[] = "Бездыханная жертва невесомо покоилась на мощных руках. Мистер Фогг и сэр Фрэнсис Кромарти застыли на месте. Проводник в страхе склонил голову, Паспарту, без сомнения, тоже был потрясён!";//"АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯабвгдеёжзийклмнопрстуфхцчшщъыьэюя";//"Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'";//"my secret servise";
-	int mystr_len = sizeof(mystr) - 1;
-	splitted_string subs = split(&mystr[0], sep, mystr_len);
-
-	cout <<endl<< " Полученный результат:"<< endl;
-	for (int h=0; h < subs.num_of_words; h++)
-	{
-	    cout << ' '<<subs.words[h]<<endl;
-	}
-	return 0;
+    char mystr[] = "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'";
+    int mystr_len = sizeof(mystr) - 1;
+    splitted_string subs = split(&mystr[0], sep, mystr_len);
+    cout << endl << " Полученный результат:" << endl;
+    for (int h=0; h < subs.num_of_words; h++)
+    {
+	cout << ' ' <<subs.words[h] << endl;
+    }
+    return 0;
 }
