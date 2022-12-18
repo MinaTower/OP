@@ -7,6 +7,15 @@ struct splitted_string
     int num_of_words;
 };
 
+void del_char(char* word[], const int rows)
+{
+        for (int j=0; j < rows; j++)
+        {
+            delete[] word[j];
+        }
+        delete[] word;
+}
+
 splitted_string split(char strin[], char separator, int string_len)
 {
     setlocale(LC_ALL, "Russian");
@@ -53,10 +62,11 @@ splitted_string split(char strin[], char separator, int string_len)
 		    {
 		        ind -= 1;
 		    }
-			ans.words[word_n][letter_n] = strin[ind];
+		    ans.words[word_n][letter_n] = strin[ind];
 		}
 		ans.words[word_n][differ -1] = '\0';
 	}
+	delete[] separator_ind;
 	return ans;
 }
 
@@ -71,13 +81,14 @@ int main()
     	cout << " Укажите его: ";
     	cin >> sep;
     }// для не-дурака
-    char mystr[] = "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'";
-    int mystr_len = sizeof(mystr) - 1;
-    splitted_string subs = split(&mystr[0], sep, mystr_len);
-    cout << endl << " Полученный результат:" << endl;
-    for (int h=0; h < subs.num_of_words; h++)
-    {
-	cout << ' ' <<subs.words[h] << endl;
-    }
-    return 0;
+	char mystr[] = "Alice was beginning to get very tired of sitting by her sister on the bank, and of having nothing to do: once or twice she had peeped into the book her sister was reading, but it had no pictures or conversations in it, 'and what is the use of a book,' thought Alice 'without pictures or conversations?'";
+	int mystr_len = sizeof(mystr) - 1;
+	splitted_string subs = split(&mystr[0], sep, mystr_len);
+	cout << endl << " Полученный результат:" << endl;
+	for (int h=0; h < subs.num_of_words; h++)
+	{
+	    cout << ' ' <<subs.words[h] << endl;
+	}
+	del_char(subs.words, subs.num_of_words);
+	return 0;
 }
