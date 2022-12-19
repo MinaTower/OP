@@ -15,7 +15,6 @@ float get_volume(float);
 float icosahedron::get_surface_area(float a)
 {
     float area = pow(a, 2)*5*pow(3, 0.5);
-    cout << area << ' ' << pow(3, 0.5);
     return area;
 }
 
@@ -32,7 +31,7 @@ int main()
     cout << " Введите максимальное количество знаков, отображаемое после запятой: ";
     int precis;
     cin >> precis;
-    cout << endl << " Введите длину ребра: ";
+    cout << " Введите длину ребра: ";
     icosahedron ans;
     cin >> ans.edge;
     ans.volume = ans.get_volume(ans.edge);
