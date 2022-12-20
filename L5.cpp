@@ -28,11 +28,11 @@ int main()
 {
     setlocale(LC_ALL, "Russian");
     cout << " Это программа для расчёта объёма и площади поверхности икосаэдра с заданной длиной ребра" << endl;
-    cout << " Введите максимальное количество знаков, отображаемое после запятой: ";
+    cout << " Введите максимальное количество цифр при выводе ответа, считая с первой, отличной от нуля: ";
     int precis;
     cin >> precis;
-    cout << " Введите длину ребра: ";
     icosahedron ans;
+    cout << " Введите длину ребра: ";
     cin >> ans.edge;
     ans.volume = ans.get_volume(ans.edge);
     ans.surface_area = ans.get_surface_area(ans.edge);
